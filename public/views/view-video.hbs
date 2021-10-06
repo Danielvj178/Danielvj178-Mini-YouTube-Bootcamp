@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>header}}
+
+<body>
+    <h1 class="text-center alert alert-danger">
+        {{video.title}}
+    </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-12">
+                <video poster="{{#if video.url_image}}../{{video.url_image}} {{else}} ../images/default.png{{/if}}"
+                    width="1024" height="500" controls>
+                    <source src="../{{video.url_video}}" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        <br />
+        <input id="video_id" type="hidden" value="{{video._id}}">
+        <div class="row">
+            <div class="col col-md-1">
+                <button id="btnLike" class="btn btn-outline-success">Like</button>
+            </div>
+            <div class="col col-md-1">
+                <label id="divLikes">{{video.likes}}</label>
+            </div>
+            <div class="col col-md-1">
+                <button id="btnDislike" class="btn btn-outline-danger">Dislike</button>
+            </div>
+            <div class="col col-md-1">
+                <label id="divDislikes">{{video.dislikes}}</label>
+            </div>
+        </div>
+        <br />
+        <h2>Additional information</h2>
+        <hr />
+        <div class="row">
+            <div class="col col-md-12">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td width="40"><strong>Created</strong></td>
+                            <td>{{ dateVideo}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Description</strong></td>
+                            <td>{{video.description}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tags</strong></td>
+                            <td>{{video.tags}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-12 text-center btn">
+                <a href="/videos" class="btn btn-outline-dark">Back to home</a>
+            </div>
+        </div>
+    </div>
+    <script src="../js/view-video.js"></script>
+</body>
+{{>footer}}
+
+</html>

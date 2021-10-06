@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{>header}}
+
+<body>
+    <h2 class="text-center alert alert-danger">Create and upload video</h2>
+
+    <form action="/videos" method="post" enctype="multipart/form-data">
+        <div class="container">
+            <div class="row">
+                <div class="col col-md-4">
+                    <label>Video</label>
+                </div>
+                <div class="col col-md-8">
+                    <div class="input-group mb-3">
+                        <input id="upload-video" type="file" class="form-control" name="video" />
+                        <label for="upload-video" class="input-group-text">Upload video</label>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col col-md-4">
+                    <label>Title</label>
+                </div>
+                <div class="col col-md-8">
+                    <input type="text" name="title" id="title" class="form-control" autocomplete="off" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col col-md-4">
+                    <label>Description</label>
+                </div>
+                <div class="col col-md-8">
+                    <textarea id="desciption" name="description" class="form-control"></textarea>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col col-md-4">
+                    <label>Tags</label>
+                </div>
+                <div class="col col-md-8">
+                    <input id="tag" type="text" name="tags" class="form-control" autocomplete="off" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col col-md-4">
+                    <label>Cover Image</label>
+                </div>
+                <div class="col col-md-8">
+                    <div class="input-group mb-3">
+                        <input id="upload-image" type="file" class="form-control" name="cover-photo" />
+                        <label for="upload-image" class="input-group-text">Upload Image</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col col-md-12 text-center">
+                <a href="/videos" class="btn btn-outline-dark">Back to home</a>
+                <input type="submit" class="btn btn-outline-danger" value="Save and upload video" />
+            </div>
+        </div>
+    </form>
+    {{>footer}}
+    {{!--
+    <script src="../js/uploadVideo.js"></script> --}}
+</body>
+
+</html>

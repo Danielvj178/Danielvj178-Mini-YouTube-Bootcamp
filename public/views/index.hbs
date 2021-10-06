@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>header}}
+
+<body>
+    <h1 class="text-center alert alert-danger">
+        Mini YouTube - Bootcamp
+    </h1>
+    <div class="container">
+        <div class="row">
+            <form action="/videos/search" method="POST">
+                <div class="text-center col col-md-12">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search videos"
+                            aria-label="Recipient's username" name="search" aria-describedby="button-addon2">
+                        <input type="submit" class="btn btn-outline-secondary" value="Search" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col col-md-10">
+                <h3 class="text-center alert alert-danger">
+                    List of videos
+                </h3>
+                <hr />
+                <div class="row">
+                    {{#each videos}}
+                    <div class="col col-md-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{#if this.url_image}} ../{{this.url_image}} {{else}} ../images/default.png {{/if}}"
+                                class="card-img-top" alt="..." width="200" height="200">
+                            <div class="card-body">
+                                <h5 class="card-title">{{this.title}}</h5>
+                                <p class="card-text"><strong>Created: </strong>{{this.newDate}}</p>
+                                <p class="card-text"><strong>Description: </strong>{{this.description}}</p>
+                                <p class="card-text"><strong>Tags: </strong>{{this.tags}}</p>
+                                <p class="card-text"><strong>Likes:
+                                    </strong><span>{{this.likes}}</span><strong>
+                                        Dislikes: </strong><span>{{this.dislikes}}</span>
+                                </p>
+                                <a href="/videos/{{this._id}}" class="btn btn-outline-danger">View video</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="col col-md-2 text-center">
+                <h3 class="alert alert-danger">
+                    Actions
+                </h3>
+                <hr />
+                <a href="/videos/upload" class="btn btn-outline-danger">Upload video</a>
+                <a id="link-sort" href="/videos?sortBy=desc" class="btn btn-outline-danger">Sort <span
+                        id="order-label"></span></a>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../js/index.js"></script>
+{{>footer}}
+
+</html>
