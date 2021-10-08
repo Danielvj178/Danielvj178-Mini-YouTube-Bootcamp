@@ -16,7 +16,7 @@
             </div>
         </div>
         <br />
-        <input id="video_id" type="hidden" value="{{video._id}}">
+        <input id="video-id" type="hidden" value="{{video._id}}">
         <div class="row">
             <div class="col col-md-1">
                 <button id="btnLike" class="btn btn-outline-success">Like</button>
@@ -39,7 +39,7 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <td width="40"><strong>Created</strong></td>
+                            <td><strong>Created</strong></td>
                             <td>{{ dateVideo}}</td>
                         </tr>
                         <tr>
@@ -53,6 +53,35 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-12">
+                <h2>Comments</h2>
+                <hr />
+                {{#each comments}}
+                <div class="card">
+                    <h5 class="card-header alert-danger">Generic User - {{this.convertDate}}</h5>
+                    <div class="card-body">
+                        <p class="card-text">{{this.comment}}</p>
+                    </div>
+                </div>
+                <br />
+                {{/each}}
+            </div>
+            <form action="" id="app-form">
+                <div class="row">
+                    <div class="col col-md-6">
+                        <div class="form-floating">
+                            <textarea id="txtComment" class="form-control" name="comment"
+                                placeholder="Leave a comment here" style="height: 100px"></textarea>
+                            <label for="txtComment">Add new comment</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-6">
+                    <button id="btn-comment" class="btn btn-outline-danger">Add comment</button>
+                </div>
+            </form>
         </div>
         <div class="row">
             <div class="col col-md-12 text-center btn">

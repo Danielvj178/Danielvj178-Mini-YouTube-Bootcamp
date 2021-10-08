@@ -27,12 +27,30 @@ const videoSchema = mongoose.Schema({
     },
     url_image: {
         type: String
-    }
+    },
+    comments: [{
+        comment: {
+            type: String,
+            required: true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now()
+        }
+    }]
 }, {
     timestamps: true
 }
 )
 
-const video = mongoose.model('Video', videoSchema)
+videoSchema.statics.saveComments = async function (id, comment) {
+    const video = await Video.findById(id)
+    video.comments = video.comments.concat({ comment })
+    await video.save()
 
-module.exports = video
+    return video
+}
+
+const Video = mongoose.model('Video', videoSchema)
+
+module.exports = Video

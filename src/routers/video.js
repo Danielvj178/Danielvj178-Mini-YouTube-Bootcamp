@@ -44,7 +44,7 @@ router.get('/videos', async (req, res) => {
     const { sortBy } = req.query
 
     const videosDB = await Video.find().sort({ createdAt: sortBy == 'desc' ? -1 : 1 }).exec()
-    const videos = convertDate(videosDB, 'createdAt', 'newDate')
+    const videos = convertDate(videosDB, 'createdAt', 'convertDate')
 
     res.render('index', {
         videos
@@ -56,24 +56,28 @@ router.get('/videos/upload', (req, res) => {
     res.render('upload-video')
 })
 
-// View video detail
+// View detail video
 router.get('/videos/:id', async (req, res) => {
     const _id = req.params.id
 
     try {
         const video = await Video.findById(_id)
-        const dateVideo = moment(video.createdAt).format('MMM Do YY, h:mm a')
 
         if (!video) {
             return res.render('page-not-found', {
-                message: 'El video que ha intentado cargar no está disponible'
+                message: 'This video is not available now'
             })
+
         }
+        const dateVideo = moment(video.createdAt).format('MMM Do YY, h:mm a')
+        const comments = convertDate(video.comments, 'createdAt', 'convertDate')
         res.render('view-video', {
             video,
-            dateVideo
+            dateVideo,
+            comments
         })
     } catch (error) {
+        console.log(error)
         res.render('page-not-found')
     }
 })
@@ -93,7 +97,7 @@ router.post('/videos', upload.fields([{ name: 'cover-photo', maxCount: 1 }, { na
         await video.save()
         const videosDB = await Video.find()
 
-        const videos = convertDate(videosDB, 'createdAt', 'newDate')
+        const videos = convertDate(videosDB, 'createdAt', 'convertDate')
 
         res.render('index', {
             videos
@@ -109,7 +113,7 @@ router.post('/videos/search', async (req, res) => {
     const { search } = req.body
 
     const videosDB = await Video.find().or([{ title: { $regex: '.*' + search + '.*', $options: 'i' } }, { tags: { $regex: '.*' + search + '.*', $options: 'i' } }])
-    const videos = convertDate(videosDB, 'createdAt', 'newDate')
+    const videos = convertDate(videosDB, 'createdAt', 'convertDate')
 
     res.render('index', {
         videos
@@ -138,5 +142,14 @@ router.patch('/videos/:id', async (req, res) => {
     res.send(video)
 })
 
+// Add comments
+router.put('/videos/addComment/:id', async (req, res) => {
+    const id = req.params.id
+    const { txtComment } = req.body
+
+    const video = await Video.saveComments(id, txtComment)
+
+    res.send(video)
+})
 
 module.exports = router
