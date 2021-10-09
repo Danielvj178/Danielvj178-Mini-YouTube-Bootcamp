@@ -22,6 +22,7 @@ btnDisLike.addEventListener('click', (e) => {
 btnComment.addEventListener('click', (e) => {
     e.preventDefault()
     const url = `/videos/addComment/${id}`
+    const divComments = document.getElementById('divComments')
 
     fetch(url, {
         method: 'PUT',
@@ -35,7 +36,8 @@ btnComment.addEventListener('click', (e) => {
     }).then(response => {
         txtComment.value = ''
         response.json().then(data => {
-            console.log(data)
+            let comment = data.at(-1)
+            divComments.insertAdjacentHTML('beforeend', `<div class="card"><h5 class= "card-header alert-danger"> Generic User - ${comment.convertDate}</h5><div class="card-body"><p class="card-text">${comment.comment}</p></div></div><br/>`)
         })
     }).catch(error => {
         console.log(error)

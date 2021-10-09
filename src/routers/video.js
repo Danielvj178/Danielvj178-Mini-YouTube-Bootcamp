@@ -148,8 +148,9 @@ router.put('/videos/addComment/:id', async (req, res) => {
     const { txtComment } = req.body
 
     const video = await Video.saveComments(id, txtComment)
+    const videos = convertDate(video.comments, 'createdAt', 'convertDate')
 
-    res.send(video)
+    res.send(videos)
 })
 
 module.exports = router
