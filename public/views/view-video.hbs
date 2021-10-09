@@ -3,7 +3,7 @@
 {{>header}}
 
 <body>
-    <h1 class="text-center alert alert-danger">
+    <h1 class="text-center alert alert-danger title-video">
         {{video.title}}
     </h1>
     <div class="container">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <br />
-        <input id="video_id" type="hidden" value="{{video._id}}">
+        <input id="video-id" type="hidden" value="{{video._id}}">
         <div class="row">
             <div class="col col-md-1">
                 <button id="btnLike" class="btn btn-outline-success">Like</button>
@@ -39,7 +39,7 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <td width="40"><strong>Created</strong></td>
+                            <td><strong>Created</strong></td>
                             <td>{{ dateVideo}}</td>
                         </tr>
                         <tr>
@@ -55,8 +55,36 @@
             </div>
         </div>
         <div class="row">
-            <div class="col col-md-12 text-center btn">
+            <div class="col col-md-12 text-center">
                 <a href="/videos" class="btn btn-outline-dark">Back to home</a>
+            </div>
+        </div>
+        <div class="row">
+            <div id="divComments" class="col col-md-12">
+                <h2>Comments</h2>
+                <hr />
+                {{#each comments}}
+                <div class="card">
+                    <h5 class="card-header alert-danger">Generic User - {{this.convertDate}}</h5>
+                    <div class="card-body">
+                        <p class="card-text">{{this.comment}}</p>
+                    </div>
+                </div>
+                <br />
+                {{/each}}
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col col-md-6">
+                <div class="form-floating">
+                    <textarea id="txtComment" class="form-control" name="comment" placeholder="Leave a comment here"
+                        style="height: 100px"></textarea>
+                    <label for="txtComment">Add new comment</label>
+                </div>
+            </div>
+            <div class="col col-md-6">
+                <button id="btn-comment" class="btn btn-outline-danger">Add comment</button>
             </div>
         </div>
     </div>

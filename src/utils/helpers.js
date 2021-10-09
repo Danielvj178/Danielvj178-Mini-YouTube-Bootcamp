@@ -1,16 +1,18 @@
 const moment = require('moment')
 /*
-    @parameter1: Model to iterate
+    @parameter1: Array to iterate
     @parameter2: Name of attribute to change
     @parameter3: New attribute add to model with convertion
 */
-const convertDate = (model, attribute, newAttribute) => {
-    model.forEach((value, index) => {
-        value[newAttribute] = moment(value[attribute]).format('MMM Do YY, h:mm a')
-        model[index] = value
+const convertDate = (arr, attribute, newAttribute) => {
+    let convert = []
+    arr.forEach((value, index) => {
+        let jsonObject = value.toObject()
+        jsonObject[newAttribute] = moment(jsonObject[attribute]).format('MMM Do YY, h:mm a')
+        convert[index] = jsonObject
     })
 
-    return model
+    return convert
 }
 
 module.exports = {
