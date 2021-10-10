@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
     },
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage })
 
 // Redirect to home page
 router.get('', (req, res) => {
@@ -95,13 +95,8 @@ router.post('/videos', upload.fields([{ name: 'cover-photo', maxCount: 1 }, { na
             video.url_video = `${imageRoute}/${req.files['video'][0].filename}`
         }
         await video.save()
-        const videosDB = await Video.find()
 
-        const videos = convertDate(videosDB, 'createdAt', 'convertDate')
-
-        res.render('index', {
-            videos
-        })
+        res.redirect('/videos')
     } catch (error) {
         console.log(error)
         res.render('page-not-found')
@@ -135,7 +130,7 @@ router.patch('/videos/:id', async (req, res) => {
             video.dislikes += 1
             break
         default:
-            break;
+            break
     }
     await video.save()
 
