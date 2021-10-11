@@ -43,7 +43,7 @@
                     {{#each videos}}
                     <div class="col col-md-4">
                         <div class="card" style="width: 18rem;">
-                            <img src="{{#if this.url_image}} ../{{this.url_image}} {{else}} ../images/default.png {{/if}}"
+                            <img src="{{#if this.url_image}} {{this.url_image}} {{else}} ../images/default.png {{/if}}"
                                 class="card-img-top" alt="..." width="200" height="200">
                             <div class="card-body">
                                 <h5 class="card-title">{{this.title}}</h5>

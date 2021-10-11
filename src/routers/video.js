@@ -1,10 +1,10 @@
 const express = require('express')
 const multer = require('multer')
 const moment = require('moment')
-const path = require('path')
 const router = express.Router()
 const Video = require('../models/video')
 const { convertDate } = require('../utils/helpers')
+const { uploadFiles } = require('../utils/upload-cloudinary')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
         }
 
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+        cb(null, file.fieldname + '-' + uniqueSuffix)
     },
 })
 
@@ -84,15 +84,25 @@ router.get('/videos/:id', async (req, res) => {
 
 // Save video upload
 router.post('/videos', upload.fields([{ name: 'cover-photo', maxCount: 1 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
-    const video = new Video(req.body)
+    let video = new Video(req.body)
     const imageRoute = process.env.IMAGES_ROUTE
 
     try {
         if (Object.keys(req.files).length > 0) {
             if (Object.keys(req.files).includes('cover-photo')) {
-                video.url_image = `${imageRoute}/${req.files['cover-photo'][0].filename}`
+                let response = await uploadFiles(req.files['cover-photo'][0], 'image', 'mini_youtube_bootcamp/images/')
+
+                if (response.http_code === 400) {
+                    return res.render('page-not-found')
+                }
+                video.url_image = response.secure_url
             }
-            video.url_video = `${imageRoute}/${req.files['video'][0].filename}`
+            let response = await uploadFiles(req.files['video'][0], 'video', 'mini_youtube_bootcamp/videos/')
+
+            if (response.http_code === 400) {
+                return res.render('page-not-found')
+            }
+            video.url_video = response.secure_url
         }
         await video.save()
 
