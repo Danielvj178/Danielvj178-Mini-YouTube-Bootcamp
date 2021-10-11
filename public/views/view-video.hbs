@@ -9,9 +9,9 @@
     <div class="container">
         <div class="row">
             <div class="col col-md-12">
-                <video poster="{{#if video.url_image}}../{{video.url_image}} {{else}} ../images/default.png{{/if}}"
+                <video poster="{{#if video.url_image}} {{video.url_image}} {{else}} ../images/default.png{{/if}}"
                     width="1024" height="500" controls>
-                    <source src="../{{video.url_video}}" type="video/mp4">
+                    <source src="{{video.url_video}}" type="video/mp4">
                 </video>
             </div>
         </div>
