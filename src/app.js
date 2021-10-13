@@ -2,7 +2,6 @@ const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
 require('./db/mongoose')
-const port = process.env.PORT
 const videoRouter = require('./routers/video')
 
 const app = express()
@@ -27,6 +26,4 @@ app.use((req, res) => {
     res.render('page-not-found')
 })
 
-app.listen(port, () => {
-    console.log(`App listen in port ${port}`)
-})
+module.exports = app
