@@ -43,12 +43,16 @@ router.get('/videos/search', (req, res) => {
 router.get('/videos', async (req, res) => {
     const { sortBy } = req.query
 
-    const videosDB = await Video.find().sort({ createdAt: sortBy == 'desc' ? -1 : 1 }).exec()
-    const videos = convertDate(videosDB, 'createdAt', 'convertDate')
+    try {
+        const videosDB = await Video.find().sort({ createdAt: sortBy == 'desc' ? -1 : 1 }).exec()
+        const videos = convertDate(videosDB, 'createdAt', 'convertDate')
 
-    res.render('index', {
-        videos
-    })
+        res.render('index', {
+            videos
+        })
+    } catch (error) {
+        res.status(500).send()
+    }
 })
 
 // Page for upload videos
@@ -77,16 +81,13 @@ router.get('/videos/:id', async (req, res) => {
             comments
         })
     } catch (error) {
-        console.log(error)
-        res.render('page-not-found')
+        res.status(500).send()
     }
 })
 
 // Save video upload
 router.post('/videos', upload.fields([{ name: 'cover-photo', maxCount: 1 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
     let video = new Video(req.body)
-    const imageRoute = process.env.IMAGES_ROUTE
-
     try {
         if (Object.keys(req.files).length > 0) {
             if (Object.keys(req.files).includes('cover-photo')) {
@@ -108,8 +109,7 @@ router.post('/videos', upload.fields([{ name: 'cover-photo', maxCount: 1 }, { na
 
         res.redirect('/videos')
     } catch (error) {
-        console.log(error)
-        res.render('page-not-found')
+        res.status(500).send()
     }
 })
 
@@ -130,21 +130,26 @@ router.patch('/videos/:id', async (req, res) => {
     const _id = req.params.id
     const { type } = req.body
 
-    const video = await Video.findById(_id)
+    try {
+        const video = await Video.findById(_id)
 
-    switch (type) {
-        case 'like':
-            video.likes += 1
-            break
-        case 'dislike':
-            video.dislikes += 1
-            break
-        default:
-            break
+        switch (type) {
+            case 'like':
+                video.likes += 1
+                break
+            case 'dislike':
+                video.dislikes += 1
+                break
+            default:
+                let message = 'Parameter type is wrong'
+                return res.status(404).send(message)
+        }
+        await video.save()
+
+        res.send(video)
+    } catch (error) {
+        res.status(500).send(error)
     }
-    await video.save()
-
-    res.send(video)
 })
 
 // Add comments
@@ -152,10 +157,14 @@ router.put('/videos/addComment/:id', async (req, res) => {
     const id = req.params.id
     const { txtComment } = req.body
 
-    const video = await Video.saveComments(id, txtComment)
-    const videos = convertDate(video.comments, 'createdAt', 'convertDate')
+    try {
+        const video = await Video.saveComments(id, txtComment)
+        const videos = convertDate(video.comments, 'createdAt', 'convertDate')
 
-    res.send(videos)
+        res.send(videos)
+    } catch (error) {
+        res.status(500).send(error)
+    }
 })
 
 module.exports = router
