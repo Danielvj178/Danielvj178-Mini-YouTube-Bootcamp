@@ -4,27 +4,24 @@ const app = require('../src/app')
 
 test('should get a videos', async () => {
     await request(app).get('/videos').expect(200)
-    //console.log(response)
 })
 
 test('should post a video', async () => {
-    /*  const response = await request(app).post('/videos')
-         .field('title', 'New video')
-         .field('description', 'Desc video')
-         .field('tags', 'video new')
-         .attach('video', 'tests/fixtures/video_prueba.mp4')
-         .attach('cover-image', 'tests/fixtures/Imagen_prueba.jpg')
-         .expect(200) */
-    /* const response = await request(app).post('/videos')
-        .field('title', 'New video')
+    await request(app).post('/videos')
         .send({
-            title: 'New video',
-            description: 'Desc video',
-            tags: 'video new',
-            url_video: 'tests/fixtures/video_prueba.mp4',
-            url_image: 'tests/fixtures/Imagen_prueba.jpg'
-        })
-        .expect(200) */
+            title: 'Test Video',
+            tags: 'Video Test',
+            url_video: './tests/fixtures/video_prueba.mp4'
+        }).expect(302)
+
+})
+
+test('should post a video without url_video', async () => {
+    await request(app).post('/videos')
+        .send({
+            title: 'Test Video',
+            tags: 'Video Test'
+        }).expect(500)
 })
 
 test('should find the video', async () => {
