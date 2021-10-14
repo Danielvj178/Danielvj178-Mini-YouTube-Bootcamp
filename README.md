@@ -20,6 +20,4 @@ npm test
 
 ## Website on Heroku
 If you want to see the application online, go to the website
-```console
-https://mini-youtube-bootcamp.herokuapp.com/videos
-```
+[Mini-youtube Website] (https://mini-youtube-bootcamp.herokuapp.com/videos)
