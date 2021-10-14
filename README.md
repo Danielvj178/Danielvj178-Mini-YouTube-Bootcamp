@@ -10,3 +10,4 @@ Once time finish of install all dependencies. Should run the next command in the
 ```console
 npm run dev
 ```
+Later, your entry to localhost:3000
