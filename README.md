@@ -1,8 +1,11 @@
 # Mini-YouTube-Bootcamp
 
 ## Installation
-For installation the project, first clone the repository and Install all npm dependecies
-
+For installation the project, first clone the repository 
+```console
+git clone https://github.com/Danielvj178/Mini-YouTube-Bootcamp.git
+```
+Install all npm dependecies
 ```console
 npm install
 ```
