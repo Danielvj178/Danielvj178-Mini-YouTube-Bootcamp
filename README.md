@@ -1,4 +1,6 @@
 # Mini-YouTube-Bootcamp
+## Requirement
+You must have Node installed
 
 ## Installation
 For installation the project, first clone the repository 
