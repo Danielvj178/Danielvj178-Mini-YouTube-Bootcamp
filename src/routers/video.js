@@ -89,21 +89,23 @@ router.get('/videos/:id', async (req, res) => {
 router.post('/videos', upload.fields([{ name: 'cover-photo', maxCount: 1 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
     let video = new Video(req.body)
     try {
-        if (Object.keys(req.files).length > 0) {
-            if (Object.keys(req.files).includes('cover-photo')) {
-                let response = await uploadFiles(req.files['cover-photo'][0], 'image', 'mini_youtube_bootcamp/images/')
+        if (req.files) {
+            if (Object.keys(req.files).length > 0) {
+                if (Object.keys(req.files).includes('cover-photo')) {
+                    let response = await uploadFiles(req.files['cover-photo'][0], 'image', 'mini_youtube_bootcamp/images/')
+
+                    if (response.http_code === 400) {
+                        return res.render('page-not-found')
+                    }
+                    video.url_image = response.secure_url
+                }
+                let response = await uploadFiles(req.files['video'][0], 'video', 'mini_youtube_bootcamp/videos/')
 
                 if (response.http_code === 400) {
                     return res.render('page-not-found')
                 }
-                video.url_image = response.secure_url
+                video.url_video = response.secure_url
             }
-            let response = await uploadFiles(req.files['video'][0], 'video', 'mini_youtube_bootcamp/videos/')
-
-            if (response.http_code === 400) {
-                return res.render('page-not-found')
-            }
-            video.url_video = response.secure_url
         }
         await video.save()
 
