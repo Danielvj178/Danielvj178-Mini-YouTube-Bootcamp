@@ -24,3 +24,5 @@ npm test
 ## Website on Heroku
 If you want to see the application online, go to the website
 [Mini-youtube Website](https://mini-youtube-bootcamp.herokuapp.com/videos)
+## Note 
+This website is deployed on Heroku and videos and images are save on Cloudinary
