@@ -13,7 +13,7 @@ Once time finish of install all dependencies. You must run the next command on t
 ```console
 npm run dev
 ```
-Later, you should go to the website localhost: 3000
+Later, you should go to the website [Project local](http://localhost:3000)
 
 ## Tests
 For run tests of application you must run the next command
