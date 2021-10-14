@@ -1,8 +1,7 @@
 # Mini-YouTube-Bootcamp
 
 ## Installation
-
-Install all npm dependecies
+For installation the project, first clone the repository and Install all npm dependecies
 
 ```console
 npm install
