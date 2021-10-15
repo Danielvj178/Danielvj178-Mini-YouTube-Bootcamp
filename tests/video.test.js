@@ -33,7 +33,7 @@ test('should find the video', async () => {
 
 test('should not find the video', async () => {
     let id = '615cfe4f5fc262304a28d3e'
-    const video = await request(app).get(`/videos/${id}`).expect(500)
+    await request(app).get(`/videos/${id}`).expect(500)
 })
 
 test('should find the video and set like a video', async () => {
