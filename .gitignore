@@ -1,3 +1,5 @@
 node_modules
 public/upload/*
 !public/upload/nodelete.txt
+config/.env
+config/test.env
