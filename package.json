@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "env-cmd -f ./config/.env nodemon src/index.js -e js,hbs",
+    "dev": "env-cmd -f ./config/.env nodemon app.js -e js,hbs",
     "test": "env-cmd -f ./config/test.env jest --watch"
   },
   "keywords": [],
@@ -14,6 +14,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cloudinary": "^1.27.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "hbs": "^4.1.2",
     "moment": "^2.29.1",
